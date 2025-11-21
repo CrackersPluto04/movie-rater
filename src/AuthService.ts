@@ -1,8 +1,4 @@
-type User = {
-    email: string;
-    password: string;
-    username: string;
-}
+import { User } from "./Types";
 
 class AuthService {
     private getUsers(): User[] {
