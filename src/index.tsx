@@ -1,5 +1,6 @@
 import { render } from 'preact';
 import './index.css';
+import './Pwa';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { LoginPage } from './LoginPage'
