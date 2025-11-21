@@ -1,0 +1,47 @@
+import { Box, Container, Typography, Stack, Link, IconButton } from '@mui/material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import GitHubIcon from '@mui/icons-material/GitHub';
+
+export function Footer() {
+    return <Box component="footer" sx={{ bgcolor: 'background.paper', py: 3, mt: 'auto' }}>
+        <Container maxWidth="lg">
+            <Box sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' },
+                gap: 2,
+                alignItems: 'center'
+            }}>
+
+                <Box sx={{ justifySelf: { xs: 'center', sm: 'start' } }}>
+                    <Link href="https://www.vik.bme.hu/" target="_blank" underline="none">
+                        <Typography variant="h6" color="text.primary">
+                            BME
+                        </Typography>
+                    </Link>
+                </Box>
+
+                <Box sx={{ justifySelf: 'center' }}>
+                    <Typography variant="body2" color="text.secondary">
+                        © 2025 Movie Rater App
+                    </Typography>
+                </Box>
+
+                <Box sx={{ justifySelf: { xs: 'center', sm: 'end' } }}>
+                    <Stack direction="row" spacing={1}>
+                        <IconButton href="https://facebook.com" target="_blank" aria-label="facebook">
+                            <FacebookIcon />
+                        </IconButton>
+                        <IconButton href="https://instagram.com" target="_blank" aria-label="instagram">
+                            <InstagramIcon />
+                        </IconButton>
+                        <IconButton href="https://github.com" target="_blank" aria-label="github">
+                            <GitHubIcon />
+                        </IconButton>
+                    </Stack>
+                </Box>
+
+            </Box>
+        </Container>
+    </Box>
+}
