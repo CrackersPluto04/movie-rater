@@ -2,7 +2,7 @@ import { render } from 'preact';
 import './index.css';
 import './Pwa';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useMemo, useState } from 'preact/hooks';
 import { LoginPage } from './LoginPage'
 import { MainPage } from './MainPage';
 import { MenuPage } from './MenuPage';
@@ -34,25 +34,27 @@ function App() {
 	return <ThemeProvider theme={theme}>
 		<CssBaseline />
 
-		{login ?
+		{login &&
 			<PageContainer justifyContent="center" alignItems="center"
-				isLoggedIn={false} mode={mode} toggleTheme={toggleTheme}
+				isMainPage={false} mode={mode} toggleTheme={toggleTheme}
 			>
 				<LoginPage onLogin={(username) => { setLogin(false); setUser(username) }}
 					onBack={() => setLogin(false)} />
 			</PageContainer>
-			:
-			(user ?
-				<PageContainer isLoggedIn={true} onLogout={() => { authService.logout(); setUser("") }}
-					mode={mode} toggleTheme={toggleTheme}
-				>
-					<MainPage />
-				</PageContainer>
-				:
-				<PageContainer isLoggedIn={false} mode={mode} toggleTheme={toggleTheme}>
-					<MenuPage onLoginClick={setLogin} />
-				</PageContainer>
-			)}
+		}
+
+		{user &&
+			<PageContainer isMainPage={true} onLogout={() => { authService.logout(); setUser("") }}
+				mode={mode} toggleTheme={toggleTheme}
+			>
+				<MainPage user={user} />
+			</PageContainer>
+		}
+
+		<PageContainer isMainPage={false} mode={mode} toggleTheme={toggleTheme}>
+			<MenuPage onLoginClick={setLogin} />
+		</PageContainer>
+
 	</ThemeProvider>
 }
 

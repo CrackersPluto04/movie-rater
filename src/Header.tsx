@@ -5,13 +5,13 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export type HeaderProps = {
-    isLoggedIn: boolean;
+    isMainPage: boolean;
     onLogout?: () => void;
     mode: 'light' | 'dark';
     toggleTheme: () => void;
 }
 
-export function Header({ isLoggedIn, onLogout, mode, toggleTheme }: HeaderProps) {
+export function Header({ isMainPage, onLogout, mode, toggleTheme }: HeaderProps) {
     return <AppBar position="static">
         <Container maxWidth='lg'>
             <Toolbar disableGutters>
@@ -24,8 +24,8 @@ export function Header({ isLoggedIn, onLogout, mode, toggleTheme }: HeaderProps)
                     Movie Rater
                 </Typography>
 
-                {/* 2. LOGOUT GOMB (Csak ha be van lépve!) */}
-                {isLoggedIn &&
+                {/* 2. LOGOUT GOMB (Csak ha MainPage-en vagyunk) */}
+                {isMainPage &&
                     <Button color="inherit" onClick={onLogout} endIcon={<LogoutIcon />}>
                         Logout
                     </Button>
