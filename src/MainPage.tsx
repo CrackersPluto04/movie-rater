@@ -5,6 +5,7 @@ import { AddMoviePage } from "./AddMoviePage";
 import { EditMoviePage } from "./EditMoviePage";
 import { movieService } from "./MovieService";
 import { MovieCard } from "./MovieCard";
+import { SavedMovie } from "./Types";
 
 type MainPageProps = {
     user: string;
@@ -12,23 +13,38 @@ type MainPageProps = {
 
 export function MainPage({ user }: MainPageProps) {
     const [movies, setMovies] = useState(() => {
-        return movieService.getMovies(`movies_${user}`);
+        return movieService.getMovies(user);
     });
-    const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
+    const [selectedMovie, setSelectedMovie] = useState<SavedMovie | null>(null);
     const [add, setAdd] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    return <>
-        {add && <AddMoviePage onBack={() => setAdd(false)} username={user} />}
+    const save = (movieToSave: SavedMovie) => {
+        movieService.saveMovie(movieToSave, user);
+        setMovies(movieService.getMovies(user));
+    };
 
-        {edit && <EditMoviePage onCancel={() => setEdit(false)} />}
+    const del = (id: number) => {
+        movieService.deleteMovie(id, user);
+        setMovies(movieService.getMovies(user));
+    };
+
+    const toggleFavorite = (id: number) => {
+        movieService.toggleFavorite(id, user);
+        setMovies(movieService.getMovies(user));
+    }
+
+    return <>
+        {add && <AddMoviePage onBack={() => setAdd(false)} onSave={save} />}
+
+        {edit && <EditMoviePage movie={selectedMovie} onBack={() => setEdit(false)} onSave={save} />}
 
         {movies.length > 0 && !add && !edit &&
             <>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
                     <Typography variant="h4">My Rated Movies</Typography>
-                    <IconButton color='success' onClick={() => setAdd(true)}>
-                        <AddIcon />
+                    <IconButton color='success' onClick={() => setAdd(true)} size='large'>
+                        <AddIcon fontSize='inherit' />
                     </IconButton>
                 </Grid>
 
@@ -37,10 +53,10 @@ export function MainPage({ user }: MainPageProps) {
                         <Grid size={{ xs: 12, sm: 6, md: 4 }} key={movie.id}>
                             <MovieCard
                                 movie={movie}
-                                onDelete={() => movieService.deleteMovie(movie.id, user)}
-                                //onToggleFavorite={handleToggleFavorite}
+                                onDelete={() => del(movie.id)}
+                                onToggleFavorite={() => toggleFavorite(movie.id)}
                                 onClick={() => {
-                                    setSelectedMovieId(movie.id);
+                                    setSelectedMovie(movie);
                                     setEdit(true);
                                 }}
                             />

@@ -8,7 +8,7 @@ type MovieCardProps = {
     movie: SavedMovie;
     onDelete: () => void;
     onClick: () => void;
-    onToggleFavorite?: (id: number) => void;
+    onToggleFavorite?: () => void;
 };
 
 export function MovieCard({ movie, onDelete, onClick, onToggleFavorite }: MovieCardProps) {
@@ -35,9 +35,9 @@ export function MovieCard({ movie, onDelete, onClick, onToggleFavorite }: MovieC
 
         </CardActionArea>
 
-        <CardActions disableSpacing sx={{ justifyContent: 'space-evenly' }}>
-            <IconButton aria-label="add to favorites" onClick={() => onToggleFavorite(movie.id)}
-                color={movie.favorite ? "error" : "default"}
+        <CardActions disableSpacing sx={{ justifyContent: 'flex-end' }}>
+            <IconButton aria-label="add to favorites" onClick={onToggleFavorite}
+                color={movie.favorite ? 'error' : 'default'}
             >
                 <FavoriteIcon />
             </IconButton>

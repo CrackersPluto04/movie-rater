@@ -4,7 +4,8 @@ const API_KEY = "a0fefeca5ce5668846ec41563b955843";
 const BASE_URL = "https://api.themoviedb.org/3";
 
 class MovieService {
-    getMovies(key: string): SavedMovie[] {
+    getMovies(username: string): SavedMovie[] {
+        const key = `movies_${username}`;
         const moviesJson = localStorage.getItem(key);
         return moviesJson ? JSON.parse(moviesJson) : [];
     }
@@ -43,6 +44,17 @@ class MovieService {
         localStorage.setItem(key, JSON.stringify(updatedMovies));
 
         alert("Movie deleted successfully!");
+    }
+
+    toggleFavorite(id: number, username: string) {
+        const key = `movies_${username}`;
+        const existingMovies = this.getMovies(key);
+        for (let movie of existingMovies) {
+            if (movie.id === id) {
+                movie.favorite = !movie.favorite;
+                break;
+            }
+        }
     }
 
     getPosterUrl(path: string | null) {

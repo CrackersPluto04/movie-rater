@@ -1,10 +1,12 @@
+import { MovieRaterForm } from "./MovieRaterForm";
+import { SavedMovie } from "./Types";
+
 type EditMoviePageProps = {
-    onCancel: () => void;
+    movie: SavedMovie;
+    onBack: () => void;
+    onSave: (movieToSave: SavedMovie) => void;
 }
 
-export function EditMoviePage({ onCancel }: EditMoviePageProps) {
-    return <>
-        <div>Edit Movie Page</div>
-        <button onClick={onCancel}>Cancel</button>
-    </>
+export function EditMoviePage({ movie, onBack, onSave }: EditMoviePageProps) {
+    return <MovieRaterForm movie={movie} onBack={onBack} onSave={onSave} />;
 }

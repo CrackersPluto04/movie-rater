@@ -1,42 +1,23 @@
 import { useState } from "preact/hooks";
 import { SavedMovie, TMDbMovie } from "./Types";
 import { movieService } from "./MovieService";
-import { Avatar, Box, Button, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Paper, Stack, TextField, Typography, Rating, Grid } from "@mui/material";
+import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Paper, Stack, TextField, Typography, Rating, Grid } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import SaveIcon from '@mui/icons-material/Save';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ClearIcon from '@mui/icons-material/Clear';
+import { MovieRaterForm } from "./MovieRaterForm";
 
 type AddMoviePageProps = {
     onBack: () => void;
-    username: string;
+    onSave: (movieToSave: SavedMovie) => void;
 }
 
-export function AddMoviePage({ onBack, username }: AddMoviePageProps) {
+export function AddMoviePage({ onBack, onSave }: AddMoviePageProps) {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState<TMDbMovie[]>([]);
     const [selectedMovie, setSelectedMovie] = useState<TMDbMovie | null>(null);
 
-    const [review, setReview] = useState("");
-    const [rating, setRating] = useState<number>(0);
-    const [pros, setPros] = useState("");
-    const [cons, setCons] = useState("");
-
-    const newMovie: SavedMovie = selectedMovie ? {
-        ...selectedMovie,
-        review,
-        rating,
-        pros,
-        cons,
-        favorite: false
-    }
-        : null;
-
     const search = () => movieService.handleSearch(query, setResults, () => setSelectedMovie(null));
-    const save = () => {
-        movieService.saveMovie(newMovie, username);
-        onBack();
-    }
     const clear = () => {
         setQuery("");
         setResults([]);
@@ -91,46 +72,8 @@ export function AddMoviePage({ onBack, username }: AddMoviePageProps) {
         </Paper>
 
         {/* --- MOVIE FROM (if a movie is chosen) --- */}
-
-        {/* --- EDIT FORM ÉS EZ A FORM LEHET UGYANAZ ÚJ KOMPONENSBE, IG --- */}
         {selectedMovie &&
-            <Paper elevation={2} sx={{ p: 2 }}>
-                <Typography variant="h5" gutterBottom>
-                    Selected: <b>{selectedMovie.title}</b>
-                </Typography>
-
-                <Stack spacing={2}>
-                    <Box>
-                        <Typography component="legend">Your Rating</Typography>
-                        <Rating
-                            value={rating}
-                            onChange={(_, newValue) => setRating(newValue || 0)}
-                            size="large"
-                        />
-                    </Box>
-
-                    <TextField
-                        label="Pros (Why did you like it?)"
-                        multiline rows={2}
-                        value={pros} onChange={(e) => setPros(e.currentTarget.value)}
-                    />
-
-                    <TextField
-                        label="Cons (What was bad?)"
-                        multiline rows={2}
-                        value={cons} onChange={(e) => setCons(e.currentTarget.value)}
-                    />
-
-                    <Stack direction="row" spacing={2} justifyContent="flex-end">
-                        <Button variant="outlined" onClick={() => setSelectedMovie(null)}>
-                            Cancel
-                        </Button>
-                        <Button variant="contained" color="success" startIcon={<SaveIcon />} onClick={save}>
-                            Save to Collection
-                        </Button>
-                    </Stack>
-                </Stack>
-            </Paper>
+            <MovieRaterForm movie={selectedMovie} onBack={onBack} onSave={onSave} />
         }
     </Stack>
 }
