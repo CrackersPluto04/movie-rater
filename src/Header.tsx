@@ -13,7 +13,7 @@ export type HeaderProps = {
 
 export function Header({ isMainPage, onLogout, mode, toggleTheme }: HeaderProps) {
     return <AppBar position="static">
-        <Container maxWidth='lg'>
+        <Container maxWidth='xl'>
             <Toolbar disableGutters>
                 {/* 1. LOGO és CÍM */}
                 <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 1 }}>

@@ -4,7 +4,7 @@ const API_KEY = "a0fefeca5ce5668846ec41563b955843";
 const BASE_URL = "https://api.themoviedb.org/3";
 
 class MovieService {
-    private getMovies(key: string, username: string): SavedMovie[] {
+    getMovies(key: string): SavedMovie[] {
         const moviesJson = localStorage.getItem(key);
         return moviesJson ? JSON.parse(moviesJson) : [];
     }
@@ -27,7 +27,7 @@ class MovieService {
 
     saveMovie(newMovie: SavedMovie, username: string) {
         const key = `movies_${username}`;
-        const existingMovies = this.getMovies(key, username);
+        const existingMovies = this.getMovies(key);
         existingMovies.push(newMovie);
 
         localStorage.setItem(key, JSON.stringify(existingMovies));
@@ -37,7 +37,7 @@ class MovieService {
 
     deleteMovie(id: number, username: string) {
         const key = `movies_${username}`;
-        const existingMovies = this.getMovies(key, username);
+        const existingMovies = this.getMovies(key);
         const updatedMovies = existingMovies.filter(m => m.id !== id);
 
         localStorage.setItem(key, JSON.stringify(updatedMovies));

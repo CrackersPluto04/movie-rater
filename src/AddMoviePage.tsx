@@ -1,9 +1,11 @@
 import { useState } from "preact/hooks";
 import { SavedMovie, TMDbMovie } from "./Types";
 import { movieService } from "./MovieService";
-import { Avatar, Box, Button, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Paper, Stack, TextField, Typography, Rating } from "@mui/material";
+import { Avatar, Box, Button, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Paper, Stack, TextField, Typography, Rating, Grid } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import SaveIcon from '@mui/icons-material/Save';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ClearIcon from '@mui/icons-material/Clear';
 
 type AddMoviePageProps = {
     onBack: () => void;
@@ -35,12 +37,21 @@ export function AddMoviePage({ onBack, username }: AddMoviePageProps) {
         movieService.saveMovie(newMovie, username);
         onBack();
     }
+    const clear = () => {
+        setQuery("");
+        setResults([]);
+    }
 
     return <Stack spacing={3}>
-        <Typography variant="h4">Add New Movie Rating</Typography>
+        <Grid container justifyContent="space-between" alignItems="center">
+            <Typography variant="h5">Add New Movie Rating</Typography>
+            <Button variant="outlined" onClick={onBack} startIcon={<ArrowBackIcon />}>
+                Back
+            </Button>
+        </Grid>
 
         {/* --- SEARCH BAR --- */}
-        <Paper sx={{ p: 2 }}>
+        <Paper elevation={0}>
             <Stack direction="row" spacing={1}>
                 <TextField
                     fullWidth
@@ -49,36 +60,41 @@ export function AddMoviePage({ onBack, username }: AddMoviePageProps) {
                     onChange={(e) => setQuery(e.currentTarget.value)}
                     onKeyDown={(e) => e.key === 'Enter' && search()}
                 />
+                <Button variant="contained" onClick={clear} startIcon={<ClearIcon />}>
+                    Clear
+                </Button>
                 <Button variant="contained" onClick={search} startIcon={<SearchIcon />}>
                     Search
                 </Button>
             </Stack>
 
             {/* --- SEARCH RESULTS --- */}
-            {!selectedMovie && results.length > 0 && (
-                <List sx={{ maxHeight: 300, overflow: 'auto', mt: 1 }}>
-                    {results.map((movie) => (
-                        <ListItem key={movie.id} disablePadding>
-                            <ListItemButton onClick={() => setSelectedMovie(movie)}>
-                                <ListItemAvatar>
-                                    <Avatar src={movieService.getPosterUrl(movie.poster_path)} variant="rounded" />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={movie.title}
-                                    secondary={movie.release_date}
-                                />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
-            )}
+            {!selectedMovie && results.length > 0 &&
+                <Paper elevation={2}>
+                    <List sx={{ maxHeight: 300, overflow: 'auto' }}>
+                        {results.map((movie) => (
+                            <ListItem key={movie.id} disablePadding>
+                                <ListItemButton onClick={() => setSelectedMovie(movie)}>
+                                    <ListItemAvatar>
+                                        <Avatar src={movieService.getPosterUrl(movie.poster_path)} variant="rounded" />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={movie.title}
+                                        secondary={movie.release_date}
+                                    />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Paper>
+            }
         </Paper>
 
         {/* --- MOVIE FROM (if a movie is chosen) --- */}
 
         {/* --- EDIT FORM ÉS EZ A FORM LEHET UGYANAZ ÚJ KOMPONENSBE, IG --- */}
-        {selectedMovie && (
-            <Paper sx={{ p: 3, border: '2px solid #1976d2' }}>
+        {selectedMovie &&
+            <Paper elevation={2} sx={{ p: 2 }}>
                 <Typography variant="h5" gutterBottom>
                     Selected: <b>{selectedMovie.title}</b>
                 </Typography>
@@ -115,6 +131,6 @@ export function AddMoviePage({ onBack, username }: AddMoviePageProps) {
                     </Stack>
                 </Stack>
             </Paper>
-        )}
+        }
     </Stack>
 }

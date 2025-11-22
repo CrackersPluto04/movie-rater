@@ -27,7 +27,7 @@ export function PageContainer({ children, justifyContent = "flex-start", alignIt
             alignItems: alignItems,
             py: 4
         }}>
-            <Container maxWidth='lg'>
+            <Container maxWidth='xl'>
                 {children}
             </Container>
         </Box>

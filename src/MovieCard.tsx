@@ -6,9 +6,9 @@ import { movieService } from "./MovieService";
 
 type MovieCardProps = {
     movie: SavedMovie;
-    onDelete: (id: number) => void;
+    onDelete: () => void;
     onClick: () => void;
-    onToggleFavorite: (id: number) => void;
+    onToggleFavorite?: (id: number) => void;
 };
 
 export function MovieCard({ movie, onDelete, onClick, onToggleFavorite }: MovieCardProps) {
@@ -41,7 +41,7 @@ export function MovieCard({ movie, onDelete, onClick, onToggleFavorite }: MovieC
             >
                 <FavoriteIcon />
             </IconButton>
-            <IconButton aria-label="delete" onClick={() => onDelete(movie.id)}>
+            <IconButton aria-label="delete" onClick={onDelete}>
                 <DeleteIcon />
             </IconButton>
         </CardActions>

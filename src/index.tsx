@@ -51,9 +51,11 @@ function App() {
 			</PageContainer>
 		}
 
-		<PageContainer isMainPage={false} mode={mode} toggleTheme={toggleTheme}>
-			<MenuPage onLoginClick={setLogin} />
-		</PageContainer>
+		{!login && !user &&
+			<PageContainer isMainPage={false} mode={mode} toggleTheme={toggleTheme}>
+				<MenuPage onLoginClick={setLogin} />
+			</PageContainer>
+		}
 
 	</ThemeProvider>
 }

@@ -5,7 +5,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 export function Footer() {
     return <Box component="footer" sx={{ bgcolor: 'background.paper', py: 3, mt: 'auto' }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
             <Box sx={{
                 display: 'grid',
                 gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' },
