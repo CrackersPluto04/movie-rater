@@ -1,3 +1,4 @@
+import { Stack, Typography } from "@mui/material";
 import { MovieRaterForm } from "./MovieRaterForm";
 import { SavedMovie } from "./Types";
 
@@ -8,5 +9,8 @@ type EditMoviePageProps = {
 }
 
 export function EditMoviePage({ movie, onBack, onSave }: EditMoviePageProps) {
-    return <MovieRaterForm movie={movie} onBack={onBack} onSave={onSave} />;
+    return <Stack spacing={3}>
+        <Typography variant="h5">Edit Your Rating</Typography>
+        <MovieRaterForm movie={movie} onBack={onBack} onSave={onSave} />
+    </Stack>
 }

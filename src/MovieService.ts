@@ -28,8 +28,13 @@ class MovieService {
 
     saveMovie(newMovie: SavedMovie, username: string) {
         const key = `movies_${username}`;
-        const existingMovies = this.getMovies(key);
-        existingMovies.push(newMovie);
+        const existingMovies = this.getMovies(username);
+        const idx = existingMovies.findIndex(m => m.id === newMovie.id);
+
+        if (idx !== -1)
+            existingMovies[idx] = newMovie;
+        else
+            existingMovies.push(newMovie);
 
         localStorage.setItem(key, JSON.stringify(existingMovies));
 
@@ -38,7 +43,7 @@ class MovieService {
 
     deleteMovie(id: number, username: string) {
         const key = `movies_${username}`;
-        const existingMovies = this.getMovies(key);
+        const existingMovies = this.getMovies(username);
         const updatedMovies = existingMovies.filter(m => m.id !== id);
 
         localStorage.setItem(key, JSON.stringify(updatedMovies));
@@ -48,13 +53,14 @@ class MovieService {
 
     toggleFavorite(id: number, username: string) {
         const key = `movies_${username}`;
-        const existingMovies = this.getMovies(key);
+        const existingMovies = this.getMovies(username);
         for (let movie of existingMovies) {
             if (movie.id === id) {
                 movie.favorite = !movie.favorite;
                 break;
             }
         }
+        localStorage.setItem(key, JSON.stringify(existingMovies));
     }
 
     getPosterUrl(path: string | null) {
