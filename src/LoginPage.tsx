@@ -6,7 +6,7 @@ import { authService } from "./AuthService";
 
 type LoginPageProps = {
     onLogin: (username: string) => void;
-    onBack?: () => void;
+    onBack: () => void;
 }
 
 export function LoginPage({ onLogin, onBack }: LoginPageProps) {

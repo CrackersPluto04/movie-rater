@@ -4,9 +4,10 @@ import CallMadeIcon from '@mui/icons-material/CallMade';
 
 type MenuPageProps = {
     onLoginClick: (value: boolean) => void;
+    onSupportClick: (value: boolean) => void;
 }
 
-export function MenuPage({ onLoginClick }: MenuPageProps) {
+export function MenuPage({ onLoginClick, onSupportClick }: MenuPageProps) {
     return <Stack spacing={3} alignItems='center'>
         <Typography variant="h1" gutterBottom>
             The Movie Rater App
@@ -18,8 +19,8 @@ export function MenuPage({ onLoginClick }: MenuPageProps) {
         <Button variant="contained" size='large' startIcon={<LoginIcon />} onClick={() => onLoginClick(true)}>
             Login
         </Button>
-        <Button variant="contained" size='large' startIcon={<CallMadeIcon />}>
-            Credit
+        <Button variant="contained" size='large' startIcon={<CallMadeIcon />} onClick={() => onSupportClick(true)}>
+            Support Me
         </Button>
 
     </Stack>

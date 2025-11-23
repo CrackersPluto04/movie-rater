@@ -8,6 +8,7 @@ import { MainPage } from './MainPage';
 import { MenuPage } from './MenuPage';
 import { authService } from './AuthService';
 import { PageContainer } from './PageContainer';
+import { SupportPage } from './SupportPage';
 
 function App() {
 	// light or dark theme
@@ -15,6 +16,7 @@ function App() {
 		return (localStorage.getItem("theme") as ("light" | "dark")) || "light";
 	});
 	const [login, setLogin] = useState(false);
+	const [support, setSupport] = useState(false);
 	const [user, setUser] = useState(() => {
 		return authService.getCurrentUser() || "";
 	});
@@ -43,6 +45,15 @@ function App() {
 			</PageContainer>
 		}
 
+		{support &&
+			<PageContainer justifyContent="center" alignItems="center"
+				isMainPage={false} mode={mode} toggleTheme={toggleTheme}
+			>
+				<SupportPage onBack={() => setSupport(false)} />
+			</PageContainer>
+
+		}
+
 		{user &&
 			<PageContainer isMainPage={true} onLogout={() => { authService.logout(); setUser("") }}
 				mode={mode} toggleTheme={toggleTheme}
@@ -51,9 +62,9 @@ function App() {
 			</PageContainer>
 		}
 
-		{!login && !user &&
+		{!login && !support && !user &&
 			<PageContainer isMainPage={false} mode={mode} toggleTheme={toggleTheme}>
-				<MenuPage onLoginClick={setLogin} />
+				<MenuPage onLoginClick={setLogin} onSupportClick={setSupport} />
 			</PageContainer>
 		}
 
