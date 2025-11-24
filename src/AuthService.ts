@@ -23,7 +23,20 @@ class AuthService {
 
         users.push({ email, password, username });
         localStorage.setItem("users", JSON.stringify(users));
-        alert("Successful registration! You can login now");
+
+        // Show push notification on successful registration
+        if (Notification.permission === 'granted') {
+            navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification('Movie Rater', {
+                    body: 'Successful registration! You can login now.',
+                    tag: 'registration-success'
+                });
+            });
+        } else {
+            // Fallback alert if notifications are not permitted
+            alert("Successful registration! You can login now");
+        }
+
         onSuccess();
     }
 

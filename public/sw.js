@@ -43,3 +43,13 @@ self.addEventListener("activate", e => {
         })
     );
 });
+
+self.addEventListener("push", e => {
+    const data = e.data?.text();
+    const options = {
+        body: data
+    };
+    e.waitUntil(
+        self.registration.showNotification('Movie Rater Notification', options)
+    );
+});

@@ -70,4 +70,6 @@ function App() {
 	</ThemeProvider>
 }
 
+Notification.requestPermission();
+
 render(<App />, document.getElementById('app'));
