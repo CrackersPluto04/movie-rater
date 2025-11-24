@@ -14,9 +14,9 @@ export function Footer() {
             }}>
 
                 <Box sx={{ justifySelf: { xs: 'center', sm: 'start' } }}>
-                    <Link href="https://www.vik.bme.hu/" target="_blank" underline="none">
+                    <Link href="https://www.vik.bme.hu/" target="_blank" underline="none" rel='noreferrer'>
                         <Typography variant="h6" color="text.primary">
-                            BME
+                            BME VIK
                         </Typography>
                     </Link>
                 </Box>
@@ -29,13 +29,13 @@ export function Footer() {
 
                 <Box sx={{ justifySelf: { xs: 'center', sm: 'end' } }}>
                     <Stack direction="row" spacing={1}>
-                        <IconButton href="https://facebook.com" target="_blank" aria-label="facebook">
+                        <IconButton href="https://facebook.com" target="_blank" aria-label="facebook" rel='noreferrer'>
                             <FacebookIcon />
                         </IconButton>
-                        <IconButton href="https://instagram.com" target="_blank" aria-label="instagram">
+                        <IconButton href="https://instagram.com" target="_blank" aria-label="instagram" rel='noreferrer'>
                             <InstagramIcon />
                         </IconButton>
-                        <IconButton href="https://github.com" target="_blank" aria-label="github">
+                        <IconButton href="https://github.com" target="_blank" aria-label="github" rel='noreferrer'>
                             <GitHubIcon />
                         </IconButton>
                     </Stack>

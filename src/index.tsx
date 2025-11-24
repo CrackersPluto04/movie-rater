@@ -51,7 +51,6 @@ function App() {
 			>
 				<SupportPage onBack={() => setSupport(false)} />
 			</PageContainer>
-
 		}
 
 		{user &&

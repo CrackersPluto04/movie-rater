@@ -8,20 +8,24 @@ type MenuPageProps = {
 }
 
 export function MenuPage({ onLoginClick, onSupportClick }: MenuPageProps) {
-    return <Stack spacing={3} alignItems='center'>
-        <Typography variant="h1" gutterBottom>
-            The Movie Rater App
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-            The real IMDB copy
-        </Typography>
+    return <Stack spacing={10} alignItems='center'>
+        <Stack spacing={1}>
+            <Typography variant="h1" textAlign='center'>
+                The Movie Rater App
+            </Typography>
+            <Typography variant="h5" gutterBottom textAlign='center'>
+                The real IMDB copy
+            </Typography>
+        </Stack>
 
-        <Button variant="contained" size='large' startIcon={<LoginIcon />} onClick={() => onLoginClick(true)}>
-            Login
-        </Button>
-        <Button variant="contained" size='large' startIcon={<CallMadeIcon />} onClick={() => onSupportClick(true)}>
-            Support Me
-        </Button>
+        <Stack spacing={3}>
+            <Button variant="contained" size='large' startIcon={<LoginIcon />} onClick={() => onLoginClick(true)}>
+                Login
+            </Button>
+            <Button variant="contained" size='large' startIcon={<CallMadeIcon />} onClick={() => onSupportClick(true)}>
+                Support Me
+            </Button>
+        </Stack>
 
     </Stack>
 }

@@ -8,10 +8,11 @@ import { TitleAndText } from "./TitleAndText";
 type MovieRaterFormProps = {
     movie: SavedMovie | TMDbMovie;
     onBack: () => void;
-    onSave: (movieToSave: SavedMovie) => void;
+    onSave?: (movieToSave: SavedMovie) => void;
+    onlyView?: boolean;
 }
 
-export function MovieRaterForm({ movie, onBack, onSave }: MovieRaterFormProps) {
+export function MovieRaterForm({ movie, onBack, onSave = () => { }, onlyView = false }: MovieRaterFormProps) {
     const [review, setReview] = useState((movie as SavedMovie).review || "");
     const [rating, setRating] = useState<number | null>((movie as SavedMovie).rating || 1);
     const [pros, setPros] = useState((movie as SavedMovie).pros || "");
@@ -65,6 +66,7 @@ export function MovieRaterForm({ movie, onBack, onSave }: MovieRaterFormProps) {
                                     setRating(newHover > 0 ? newHover : rating);
                                 }}
                                 size="large"
+                                readOnly={onlyView}
                             />
                         </Stack>
 
@@ -72,27 +74,43 @@ export function MovieRaterForm({ movie, onBack, onSave }: MovieRaterFormProps) {
                             label="Your review"
                             multiline rows={2}
                             value={review} onChange={(e) => setReview(e.currentTarget.value)}
+                            slotProps={{
+                                input: {
+                                    readOnly: onlyView
+                                }
+                            }}
                         />
 
                         <TextField
                             label="Pros (What did you like?)"
                             multiline rows={2}
                             value={pros} onChange={(e) => setPros(e.currentTarget.value)}
+                            slotProps={{
+                                input: {
+                                    readOnly: onlyView
+                                }
+                            }}
                         />
 
                         <TextField
                             label="Cons (What do you think was bad?)"
                             multiline rows={2}
                             value={cons} onChange={(e) => setCons(e.currentTarget.value)}
+                            slotProps={{
+                                input: {
+                                    readOnly: onlyView
+                                }
+                            }}
                         />
 
                         <Stack direction="row" spacing={2} justifyContent="flex-end">
                             <Button variant="outlined" color='error' onClick={onBack}>
-                                Cancel
+                                {onlyView ? "Back" : "Cancel"}
                             </Button>
-                            <Button variant="contained" color="success" startIcon={<SaveIcon />} onClick={save}>
-                                Save to Collection
-                            </Button>
+                            {!onlyView &&
+                                <Button variant="contained" color="success" startIcon={<SaveIcon />} onClick={save}>
+                                    Save to Collection
+                                </Button>}
                         </Stack>
                     </Stack>
                 </Stack>

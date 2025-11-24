@@ -15,7 +15,7 @@ export function Header({ isMainPage, onLogout, mode, toggleTheme }: HeaderProps)
     return <AppBar position="static">
         <Container maxWidth='xl'>
             <Toolbar disableGutters>
-                {/* 1. LOGO és CÍM */}
+                {/* LOGO and TITLE */}
                 <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 1 }}>
                     <MovieFilterIcon />
                 </IconButton>
@@ -24,17 +24,17 @@ export function Header({ isMainPage, onLogout, mode, toggleTheme }: HeaderProps)
                     Movie Rater
                 </Typography>
 
-                {/* 2. LOGOUT GOMB (Csak ha MainPage-en vagyunk) */}
+                {/* THEME CHANGER */}
+                <IconButton onClick={toggleTheme} color="inherit">
+                    {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                </IconButton>
+
+                {/* 3. LOGOUT BUTTON (Only after login) */}
                 {isMainPage &&
                     <Button color="inherit" onClick={onLogout} endIcon={<LogoutIcon />}>
                         Logout
                     </Button>
                 }
-
-                {/* 3. TÉMA VÁLTÓ (Mindig ott van) */}
-                <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">
-                    {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                </IconButton>
             </Toolbar>
         </Container>
     </AppBar>

@@ -6,6 +6,7 @@ import { EditMoviePage } from "./EditMoviePage";
 import { movieService } from "./MovieService";
 import { MovieCard } from "./MovieCard";
 import { SavedMovie } from "./Types";
+import { InfoPage } from "./InfoPage";
 
 type MainPageProps = {
     user: string;
@@ -18,6 +19,7 @@ export function MainPage({ user }: MainPageProps) {
     const [selectedMovie, setSelectedMovie] = useState<SavedMovie | null>(null);
     const [add, setAdd] = useState(false);
     const [edit, setEdit] = useState(false);
+    const [info, setInfo] = useState(false);
 
     const save = (movieToSave: SavedMovie) => {
         movieService.saveMovie(movieToSave, user);
@@ -39,7 +41,11 @@ export function MainPage({ user }: MainPageProps) {
 
         {edit && <EditMoviePage movie={selectedMovie} onBack={() => setEdit(false)} onSave={save} />}
 
-        {movies.length > 0 && !add && !edit &&
+        {info && selectedMovie &&
+            <InfoPage movie={selectedMovie} onBack={() => setInfo(false)} />
+        }
+
+        {movies.length > 0 && !add && !edit && !info &&
             <>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
                     <Typography variant="h4">My Rated Movies</Typography>
@@ -59,6 +65,10 @@ export function MainPage({ user }: MainPageProps) {
                                     setSelectedMovie(movie);
                                     setEdit(true);
                                 }}
+                                onInfo={() => {
+                                    setSelectedMovie(movie);
+                                    setInfo(true);
+                                }}
                             />
                         </Grid>
                     ))}
@@ -66,7 +76,7 @@ export function MainPage({ user }: MainPageProps) {
             </>
         }
 
-        {movies.length === 0 && !add && !edit &&
+        {movies.length === 0 && !add && !edit && !info &&
             <>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
                     <Typography variant="h4">My Rated Movies</Typography>

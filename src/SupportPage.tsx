@@ -44,7 +44,7 @@ export function SupportPage({ onBack }: SupportPageProps) {
                             onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
                         />
                     </a>
-                    <Link href="https://revolut.me/benedemuua" target='_blank' underline="hover"
+                    <Link href="https://revolut.me/benedemuua" target='_blank' underline="hover" rel='noreferrer'
                         sx={{ typography: 'h6', fontWeight: 'bold', color: '#0075EB' }}
                     >
                         @benedemuua
