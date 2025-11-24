@@ -7,6 +7,7 @@ import { movieService } from "./MovieService";
 import { MovieCard } from "./MovieCard";
 import { SavedMovie } from "./Types";
 import { InfoPage } from "./InfoPage";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 type MainPageProps = {
     user: string;
@@ -20,20 +21,25 @@ export function MainPage({ user }: MainPageProps) {
     const [add, setAdd] = useState(false);
     const [edit, setEdit] = useState(false);
     const [info, setInfo] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     const save = (movieToSave: SavedMovie) => {
         movieService.saveMovie(movieToSave, user);
         setMovies(movieService.getMovies(user));
+        setSelectedMovie(null);
     };
 
     const del = (id: number) => {
         movieService.deleteMovie(id, user);
         setMovies(movieService.getMovies(user));
+        setDeleteDialogOpen(false);
+        setSelectedMovie(null);
     };
 
     const toggleFavorite = (id: number) => {
         movieService.toggleFavorite(id, user);
         setMovies(movieService.getMovies(user));
+        setSelectedMovie(null);
     }
 
     return <>
@@ -59,7 +65,10 @@ export function MainPage({ user }: MainPageProps) {
                         <Grid size={{ xs: 12, sm: 6, md: 4 }} key={movie.id}>
                             <MovieCard
                                 movie={movie}
-                                onDelete={() => del(movie.id)}
+                                onDelete={() => {
+                                    setSelectedMovie(movie);
+                                    setDeleteDialogOpen(true)
+                                }}
                                 onToggleFavorite={() => toggleFavorite(movie.id)}
                                 onClick={() => {
                                     setSelectedMovie(movie);
@@ -90,5 +99,17 @@ export function MainPage({ user }: MainPageProps) {
                 </Typography>
             </>
         }
+
+        <ConfirmDialog
+            open={deleteDialogOpen}
+            title="Delete Rated Movie"
+            content="Are you sure you want to delete this movie? This action cannot be undone."
+            onConfirm={() => {
+                if (selectedMovie) {
+                    del(selectedMovie.id);
+                }
+            }}
+            onCancel={() => setDeleteDialogOpen(false)}
+        />
     </>
 }

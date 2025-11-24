@@ -47,8 +47,6 @@ class MovieService {
         const updatedMovies = existingMovies.filter(m => m.id !== id);
 
         localStorage.setItem(key, JSON.stringify(updatedMovies));
-
-        alert("Movie deleted successfully!");
     }
 
     toggleFavorite(id: number, username: string) {
