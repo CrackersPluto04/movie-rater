@@ -1,4 +1,4 @@
-const cacheName = "movie-rater-v4";
+const cacheName = "movie-rater-v1";
 
 async function impl(e) {
     const url = new URL(e.request.url);
@@ -36,7 +36,7 @@ self.addEventListener("activate", e => {
             return Promise.all(keyList.map(key => {
                 // Delete old cache versions
                 if (key !== cacheName) {
-                    console.log('Régi cache törlése:', key);
+                    console.log('Deleting old cache', key);
                     return caches.delete(key);
                 }
             }));

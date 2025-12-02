@@ -95,7 +95,7 @@ export function MainPage({ user }: MainPageProps) {
                 </Grid>
 
                 <Typography variant="body1" sx={{ p: 2 }}>
-                    Nincs még felvett filmed. Kattints a + gombra!
+                    You haven't added a rating yet. Click the + button!
                 </Typography>
             </>
         }

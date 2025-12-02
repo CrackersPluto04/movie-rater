@@ -29,13 +29,13 @@ export function Footer() {
 
                 <Box sx={{ justifySelf: { xs: 'center', sm: 'end' } }}>
                     <Stack direction="row" spacing={1}>
-                        <IconButton href="https://facebook.com" target="_blank" aria-label="facebook" rel='noreferrer'>
+                        <IconButton href="https://www.facebook.com/benedek.szabo.0414" target="_blank" aria-label="facebook" rel='noreferrer'>
                             <FacebookIcon />
                         </IconButton>
-                        <IconButton href="https://instagram.com" target="_blank" aria-label="instagram" rel='noreferrer'>
+                        <IconButton href="https://www.instagram.com/benedek.szabo_04.14" target="_blank" aria-label="instagram" rel='noreferrer'>
                             <InstagramIcon />
                         </IconButton>
-                        <IconButton href="https://github.com" target="_blank" aria-label="github" rel='noreferrer'>
+                        <IconButton href="https://github.com/CrackersPluto04" target="_blank" aria-label="github" rel='noreferrer'>
                             <GitHubIcon />
                         </IconButton>
                     </Stack>

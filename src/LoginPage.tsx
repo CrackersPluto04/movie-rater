@@ -56,6 +56,9 @@ export function LoginPage({ onLogin, onBack }: LoginPageProps) {
                 onClick={() => {
                     setRegister(!register);
                     setError("");
+                    setEmail("");
+                    setPassword("");
+                    setUsername("");
                 }}>
                 {register ? "Login here" : "Register here"}
             </Link>

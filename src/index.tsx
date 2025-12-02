@@ -1,5 +1,4 @@
 import { render } from 'preact';
-import './index.css';
 import './Pwa';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { useMemo, useState } from 'preact/hooks';
@@ -62,7 +61,9 @@ function App() {
 		}
 
 		{!login && !support && !user &&
-			<PageContainer isMainPage={false} mode={mode} toggleTheme={toggleTheme}>
+			<PageContainer justifyContent="center" alignItems="center"
+				isMainPage={false} mode={mode} toggleTheme={toggleTheme}
+			>
 				<MenuPage onLoginClick={setLogin} onSupportClick={setSupport} />
 			</PageContainer>
 		}

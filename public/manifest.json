@@ -20,7 +20,7 @@
         },
         {
             "src": "screenshot-mobile.png",
-            "sizes": "400x700",
+            "sizes": "500x908",
             "type": "image/png",
             "form_factor": "narrow",
             "label": "Mobile screenshot"

@@ -10,7 +10,12 @@ type MenuPageProps = {
 export function MenuPage({ onLoginClick, onSupportClick }: MenuPageProps) {
     return <Stack spacing={10} alignItems='center'>
         <Stack spacing={1}>
-            <Typography variant="h1" textAlign='center'>
+            <Typography variant="h1" textAlign='center'
+                sx={{
+                    fontWeight: 'bold',
+                    fontSize: { xs: '2.5rem', sm: '4rem', md: '6rem' }
+                }}
+            >
                 The Movie Rater App
             </Typography>
             <Typography variant="h5" gutterBottom textAlign='center'>
