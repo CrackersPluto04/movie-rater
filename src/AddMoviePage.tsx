@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { SavedMovie, TMDbMovie } from "./Types";
 import { movieService } from "./MovieService";
 import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Paper, Stack, TextField, Typography, Rating, Grid } from "@mui/material";
@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ClearIcon from '@mui/icons-material/Clear';
 import { MovieRaterForm } from "./MovieRaterForm";
+import { TitleAndBackButton } from "./TitleAndBackButton";
 
 type AddMoviePageProps = {
     onBack: () => void;
@@ -23,13 +24,14 @@ export function AddMoviePage({ onBack, onSave }: AddMoviePageProps) {
         setResults([]);
     }
 
+    const searchInputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        if (searchInputRef.current)
+            searchInputRef.current.focus();
+    }, []);
+
     return <Stack spacing={3}>
-        <Grid container justifyContent="space-between" alignItems="center">
-            <Typography variant="h5">Add New Movie Rating</Typography>
-            <Button variant="outlined" onClick={onBack} startIcon={<ArrowBackIcon />}>
-                Back
-            </Button>
-        </Grid>
+        <TitleAndBackButton title="Add New Movie Rating" titleVariant="h5" onBack={onBack} />
 
         {/* --- SEARCH BAR --- */}
         <Paper elevation={0}>
@@ -40,6 +42,7 @@ export function AddMoviePage({ onBack, onSave }: AddMoviePageProps) {
                     value={query}
                     onChange={(e) => setQuery(e.currentTarget.value)}
                     onKeyDown={(e) => e.key === 'Enter' && search()}
+                    inputRef={searchInputRef}
                 />
                 <Button variant="contained" onClick={clear} startIcon={<ClearIcon />}>
                     Clear

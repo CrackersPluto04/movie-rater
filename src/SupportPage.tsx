@@ -1,6 +1,6 @@
-import { Button, Container, Grid, Link, Stack, Typography } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Container, Grid, Link, Stack, Typography } from "@mui/material";
 import revolutQr from './assets/revolut_qr.png';
+import { TitleAndBackButton } from "./TitleAndBackButton";
 
 type SupportPageProps = {
     onBack: () => void;
@@ -8,12 +8,7 @@ type SupportPageProps = {
 
 export function SupportPage({ onBack }: SupportPageProps) {
     return <Container maxWidth="lg">
-        <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 10 }}>
-            <Typography variant="h4">Support My Work 😀</Typography>
-            <Button variant="outlined" onClick={onBack} startIcon={<ArrowBackIcon />}>
-                Back
-            </Button>
-        </Grid>
+        <TitleAndBackButton title="Support My Work 😀" titleVariant="h4" onBack={onBack} />
 
         <Grid container spacing={4} alignItems="center">
             <Grid size={{ xs: 12, md: 6 }}>

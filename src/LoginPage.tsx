@@ -1,5 +1,5 @@
 import { Alert, Button, Link, Stack, TextField, Typography } from "@mui/material";
-import { useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { authService } from "./AuthService";
@@ -15,6 +15,12 @@ export function LoginPage({ onLogin, onBack }: LoginPageProps) {
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [error, setError] = useState("");
+
+    const emailInputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        if (emailInputRef.current)
+            emailInputRef.current.focus();
+    }, [register]);
 
     const handleAuth = () => {
         if (register)
@@ -33,6 +39,7 @@ export function LoginPage({ onLogin, onBack }: LoginPageProps) {
 
         <TextField required type='email' label="Email" variant="outlined"
             value={email} onChange={(e) => setEmail(e.currentTarget.value)}
+            inputRef={emailInputRef}
         />
 
         <TextField required type='password' label="Password" variant="outlined"
