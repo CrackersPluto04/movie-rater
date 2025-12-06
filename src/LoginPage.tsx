@@ -4,24 +4,36 @@ import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { authService } from "./AuthService";
 
+/**
+ * Props definition for LoginPage
+ */
 type LoginPageProps = {
+    /** Called when Login is pressed */
     onLogin: (username: string) => void;
+    /** Called when Back is pressed */
     onBack: () => void;
 }
 
+/**
+ * Component for the Login / Register page.
+ * User can register a new account or login to an existing one.
+ */
 export function LoginPage({ onLogin, onBack }: LoginPageProps) {
+    // Login / register inputs
     const [register, setRegister] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [error, setError] = useState("");
 
+    // Autofocus on email textfield
     const emailInputRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
         if (emailInputRef.current)
             emailInputRef.current.focus();
     }, [register]);
 
+    // Handles register / login using authService
     const handleAuth = () => {
         if (register)
             authService.register(email, password, username, setError, () => setRegister(false));
@@ -31,12 +43,14 @@ export function LoginPage({ onLogin, onBack }: LoginPageProps) {
 
     return <Stack spacing={2} alignItems='center'>
 
+        {/* Title */}
         <Typography variant="h4" component="h1" gutterBottom>
             {register ? "Register Account" : "Login to your account"}
         </Typography>
 
         {error && <Alert severity="error">{error}</Alert>}
 
+        {/* Login / Register fields, button */}
         <TextField required type='email' label="Email" variant="outlined"
             value={email} onChange={(e) => setEmail(e.currentTarget.value)}
             inputRef={emailInputRef}
@@ -56,6 +70,7 @@ export function LoginPage({ onLogin, onBack }: LoginPageProps) {
             {register ? "Register" : "Login"}
         </Button>
 
+        {/* Switch between login / register */}
         <Typography>
             {register ? "Already have an account? " : "Don't have an account? "}
             <Link

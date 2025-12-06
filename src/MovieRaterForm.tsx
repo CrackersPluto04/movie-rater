@@ -1,23 +1,40 @@
-import { Box, Button, Divider, Grid, Paper, Rating, Stack, TextField, Typography } from "@mui/material";
+import { Button, Divider, Grid, Paper, Rating, Stack, TextField, Typography } from "@mui/material";
 import { SavedMovie, TMDbMovie } from "./Types";
 import SaveIcon from '@mui/icons-material/Save';
 import { useState } from "preact/hooks";
 import { movieService } from "./MovieService";
 import { TitleAndText } from "./TitleAndText";
 
+/**
+ * Props definition for MovieRaterForm
+ */
 type MovieRaterFormProps = {
+    /** The form presents this movie's infos */
     movie: SavedMovie | TMDbMovie;
+    /** Called when Back is pressed */
     onBack: () => void;
+    /** Called when Save is pressed */
     onSave?: (movieToSave: SavedMovie) => void;
+    /** Should the user's review be editable? */
     onlyView?: boolean;
 }
 
+/**
+ * Component for the movie ratings
+ * Add, Edit, Info uses this component
+ * Add and edit is editable - the user can see the basics of the movie and give a review of it.
+ * Info is view only - the user can see their review and the base infos.
+ */
 export function MovieRaterForm({ movie, onBack, onSave = () => { }, onlyView = false }: MovieRaterFormProps) {
+    // Review variables
     const [review, setReview] = useState((movie as SavedMovie).review || "");
     const [rating, setRating] = useState<number | null>((movie as SavedMovie).rating || 1);
     const [pros, setPros] = useState((movie as SavedMovie).pros || "");
     const [cons, setCons] = useState((movie as SavedMovie).cons || "");
 
+    /**
+     * Saves the movie review and goes back to main page
+     */
     const save = () => {
         const movieToSave: SavedMovie = {
             ...movie,
@@ -116,9 +133,10 @@ export function MovieRaterForm({ movie, onBack, onSave = () => { }, onlyView = f
                 </Stack>
             </Grid>
 
+            {/* Movie poster */}
             <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <img src={movieService.getPosterUrl(movie.poster_path)}
-                    alt="Movie's poster"
+                    alt="Movie poster"
                     style={{ width: '100%', borderRadius: '8px' }} />
             </Grid>
         </Grid>

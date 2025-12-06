@@ -9,26 +9,47 @@ import { SavedMovie } from "./Types";
 import { InfoPage } from "./InfoPage";
 import { ConfirmDialog } from "./ConfirmDialog";
 
+/**
+ * Props definition for MainPage
+ */
 type MainPageProps = {
+    /** Currently logged in user's username */
     user: string;
 }
 
+/**
+ * Component for the Main page.
+ * After login, the user's rated movies list is shown here.
+ * Interactions with the rated movies, adding new rating is done from here
+ */
 export function MainPage({ user }: MainPageProps) {
+    // user's movie list
     const [movies, setMovies] = useState(() => {
         return movieService.getMovies(user);
     });
     const [selectedMovie, setSelectedMovie] = useState<SavedMovie | null>(null);
+
+    // Different page for each interaction
     const [add, setAdd] = useState(false);
     const [edit, setEdit] = useState(false);
     const [info, setInfo] = useState(false);
+
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
+    /**
+     * Saves the new movie rating to the user's list
+     * @param movieToSave The rated movie to save
+     */
     const save = (movieToSave: SavedMovie) => {
         movieService.saveMovie(movieToSave, user);
         setMovies(movieService.getMovies(user));
         setSelectedMovie(null);
     };
 
+    /**
+     * Deletes the movie from the user's list
+     * @param id ID of the movie to delete
+     */
     const del = (id: number) => {
         movieService.deleteMovie(id, user);
         setMovies(movieService.getMovies(user));
@@ -36,6 +57,10 @@ export function MainPage({ user }: MainPageProps) {
         setSelectedMovie(null);
     };
 
+    /**
+     * Favorite / Unfavorite the movie
+     * @param id The movie to toggle favorite of
+     */
     const toggleFavorite = (id: number) => {
         movieService.toggleFavorite(id, user);
         setMovies(movieService.getMovies(user));
@@ -43,14 +68,18 @@ export function MainPage({ user }: MainPageProps) {
     }
 
     return <>
+        {/* Page for adding a new movie */}
         {add && <AddMoviePage onBack={() => setAdd(false)} onSave={save} />}
 
+        {/* Page to edit a rated movie */}
         {edit && <EditMoviePage movie={selectedMovie} onBack={() => setEdit(false)} onSave={save} />}
 
+        {/* Page to check a rated movie */}
         {info && selectedMovie &&
             <InfoPage movie={selectedMovie} onBack={() => setInfo(false)} />
         }
 
+        {/* User's movie list, each movie is a MovieCard */}
         {movies.length > 0 && !add && !edit && !info &&
             <>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
@@ -85,6 +114,7 @@ export function MainPage({ user }: MainPageProps) {
             </>
         }
 
+        {/* Placeholder text if movie list is empty */}
         {movies.length === 0 && !add && !edit && !info &&
             <>
                 <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
@@ -100,6 +130,7 @@ export function MainPage({ user }: MainPageProps) {
             </>
         }
 
+        {/* Confirmation before movie delete */}
         <ConfirmDialog
             open={deleteDialogOpen}
             title="Delete Rated Movie"

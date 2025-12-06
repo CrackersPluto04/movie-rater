@@ -3,6 +3,10 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
+/**
+ * Helper component that implements the footer's ui and features.
+ * Used throughout the app.
+ */
 export function Footer() {
     return <Box component="footer" sx={{ bgcolor: 'background.paper', py: 3, mt: 'auto' }}>
         <Container maxWidth="xl">

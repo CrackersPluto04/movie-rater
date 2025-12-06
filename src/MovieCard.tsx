@@ -5,14 +5,28 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
 import { movieService } from "./MovieService";
 
+/**
+ * Props definition for MovieCard
+ */
 type MovieCardProps = {
+    /** The card shows the infos of this movie */
     movie: SavedMovie;
+    /** Called when delete (trash icon) is pressed on the card */
     onDelete: () => void;
+    /** Called when card is clicked */
     onClick: () => void;
+    /** Called when favorite toggler (heart icon) is pressed on the card */
     onToggleFavorite?: () => void;
+    /** Called when information (info icon) is pressed on the card */
     onInfo: () => void;
 };
 
+/**
+ * Component for the movie cards.
+ * Shows a header with the title, release date, the movie poster and overview.
+ * Actions for favorite, delete and more info
+ * More info shows the user's rating of the movie as well as the basic infos
+ */
 export function MovieCard({ movie, onDelete, onClick, onToggleFavorite, onInfo }: MovieCardProps) {
     return <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <CardActionArea onClick={onClick}>

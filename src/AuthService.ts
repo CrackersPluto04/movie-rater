@@ -1,11 +1,28 @@
 import { User } from "./Types";
 
+/**
+ * Class that handes the registration and login processes
+ * Email and Username are unique
+ */
 class AuthService {
+    /**
+     * Private getter that returns all the registered users
+     * @returns List of the users
+     */
     private getUsers(): User[] {
         const userJson = localStorage.getItem("users");
         return userJson ? JSON.parse(userJson) : [];
     }
 
+    /**
+     * Handles the registration process
+     * Checks if credentials are available then registers or shows error message
+     * @param email Email to register with
+     * @param password Password to register with
+     * @param username Username to register with
+     * @param setError Callback function to call if any credential cant be used
+     * @param onSuccess Callback function to call if registration was succesful
+     */
     register(email: string, password: string, username: string,
         setError: (msg: string) => void, onSuccess: () => void
     ) {
@@ -40,6 +57,14 @@ class AuthService {
         onSuccess();
     }
 
+    /**
+     * Handles the login process
+     * Checks if credentials are valid then logs in or shows error message
+     * @param email Email to register with
+     * @param password Password to register with
+     * @param setError Callback function to call if any credential is invalid
+     * @param onSuccess Callback function to call if login was succesful
+     */
     login(email: string, password: string,
         setError: (msg: string) => void, onSuccess: (username: string) => void
     ) {
@@ -55,10 +80,18 @@ class AuthService {
         setError("Invalid Email or Password");
     }
 
+    /**
+     * Logs out the currently logged in user
+     */
     logout() {
         localStorage.removeItem("currentUser");
     }
 
+    /**
+     * Return the currently logged in user
+     * It is an [] if there isnt any
+     * @returns 
+     */
     getCurrentUser(): string {
         return localStorage.getItem("currentUser");
     }

@@ -6,19 +6,19 @@ async function impl(e) {
         url.pathname.includes("@vite") ||
         url.pathname.includes("@react-refresh") ||
         url.pathname.includes("node_modules") ||
-        url.search.includes("t=") || // Időbélyeges kérések
-        !url.protocol.startsWith("http") // Nem HTTP(S) kérések
+        url.search.includes("t=") ||
+        !url.protocol.startsWith("http")
     )
-        return fetch(e.request); // Eredeti kérés továbbítása
+        return fetch(e.request); // Original request return
 
-    let cache = await caches.open(cacheName); // Cache megnyitása, async
+    let cache = await caches.open(cacheName); // Cache open, async
     let cacheResponse = await cache.match(e.request); // Lookup
-    if (cacheResponse) // Ha megvan
-        return cacheResponse // Visszadjuk
+    if (cacheResponse) // if found
+        return cacheResponse // return
     else {
-        let networkResponse = await fetch(e.request); // Ha nincs meg, akkor elindítjuk a tényleges hálózati lekérdezést
-        cache.put(e.request, networkResponse.clone()) // Eltároljuk
-        return networkResponse; // Visszadjuk
+        let networkResponse = await fetch(e.request); // else, start the real network query
+        cache.put(e.request, networkResponse.clone()) // store
+        return networkResponse; // return
     }
 }
 
@@ -44,6 +44,7 @@ self.addEventListener("activate", e => {
     );
 });
 
+// Push notification implementation
 self.addEventListener("push", e => {
     const data = e.data?.text();
     const options = {

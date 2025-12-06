@@ -2,10 +2,17 @@ import { Container, Grid, Link, Stack, Typography } from "@mui/material";
 import revolutQr from './assets/revolut_qr.png';
 import { TitleAndBackButton } from "./TitleAndBackButton";
 
+/**
+ * Props definition for SupportPage
+ */
 type SupportPageProps = {
+    /** Called when Back is pressed */
     onBack: () => void;
 }
 
+/**
+ * Component to show the ways the developers can be supported.
+ */
 export function SupportPage({ onBack }: SupportPageProps) {
     return <Container maxWidth="lg">
         <TitleAndBackButton title="Support My Work 😀" titleVariant="h4" onBack={onBack} />

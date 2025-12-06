@@ -2,11 +2,20 @@ import { Button, Stack, Typography } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 
+/**
+ * Props definition for MenuPage
+ */
 type MenuPageProps = {
+    /** Called when Login is pressed */
     onLoginClick: (value: boolean) => void;
+    /** Called when Support Me is pressed */
     onSupportClick: (value: boolean) => void;
 }
 
+/**
+ * Component for the main menu.
+ * Visible when the user isnt logged in.
+ */
 export function MenuPage({ onLoginClick, onSupportClick }: MenuPageProps) {
     return <Stack spacing={10} alignItems='center'>
         <Stack spacing={1}>

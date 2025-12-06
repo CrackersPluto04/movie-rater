@@ -16,7 +16,8 @@ type EditMoviePageProps = {
 }
 
 /**
- *  
+ * Component to edit the chosen rated movie.
+ * Uses MovieRaterForm to display and edit the movie details.
  */
 export function EditMoviePage({ movie, onBack, onSave }: EditMoviePageProps) {
     return <Stack spacing={3}>

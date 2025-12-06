@@ -1,3 +1,7 @@
+/**
+ * Pwa implementation
+ * Registers service worker
+ */
 class Pwa {
     #serviceWorkerRegistration?: ServiceWorkerRegistration;
 
@@ -10,4 +14,5 @@ class Pwa {
     }
 }
 
+// Pwa export
 export const pwa = new Pwa();

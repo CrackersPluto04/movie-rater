@@ -1,29 +1,43 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { SavedMovie, TMDbMovie } from "./Types";
 import { movieService } from "./MovieService";
-import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Paper, Stack, TextField, Typography, Rating, Grid } from "@mui/material";
+import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText, ListItemButton, Paper, Stack, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ClearIcon from '@mui/icons-material/Clear';
 import { MovieRaterForm } from "./MovieRaterForm";
 import { TitleAndBackButton } from "./TitleAndBackButton";
 
+/**
+ * Props definition for AddMoviePage
+ */
 type AddMoviePageProps = {
+    /** Called when Back is pressed */
     onBack: () => void;
+    /** Called when Save is pressed */
     onSave: (movieToSave: SavedMovie) => void;
 }
 
+/**
+ * Component to add a new movie rating.
+ * Uses MovieService to get the search results from The Movie Database.
+ * Uses MovieRaterForm to display, edit, add the movie details.
+ */
 export function AddMoviePage({ onBack, onSave }: AddMoviePageProps) {
+    // Search query
     const [query, setQuery] = useState("");
+    // Fetched movies list
     const [results, setResults] = useState<TMDbMovie[]>([]);
+    // Selected searched movie from the displayed list
     const [selectedMovie, setSelectedMovie] = useState<TMDbMovie | null>(null);
 
+    // Search and Clear buttons on search bar
     const search = () => movieService.handleSearch(query, setResults, () => setSelectedMovie(null));
     const clear = () => {
         setQuery("");
         setResults([]);
     }
 
+    // Autofocus on search bar
     const searchInputRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
         if (searchInputRef.current)
@@ -74,7 +88,7 @@ export function AddMoviePage({ onBack, onSave }: AddMoviePageProps) {
             }
         </Paper>
 
-        {/* --- MOVIE FROM (if a movie is chosen) --- */}
+        {/* --- MOVIE FORM (if a movie is chosen) --- */}
         {selectedMovie &&
             <MovieRaterForm movie={selectedMovie} onBack={onBack} onSave={onSave} />
         }
