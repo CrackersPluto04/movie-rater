@@ -1,4 +1,4 @@
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { ReactNode } from "preact/compat"
 import { Header, HeaderProps } from "./Header";
 import { Footer } from "./Footer";
