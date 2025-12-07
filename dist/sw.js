@@ -1,4 +1,4 @@
-const cacheName = "movie-rater-v5";
+const cacheName = "movie-rater-v6";
 
 async function impl(e) {
     const url = new URL(e.request.url);

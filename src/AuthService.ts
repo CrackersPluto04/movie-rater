@@ -42,7 +42,7 @@ class AuthService {
         localStorage.setItem("users", JSON.stringify(users));
 
         // Show push notification on successful registration
-        if (Notification.permission === 'granted') {
+        if ('Notification' in window && Notification.permission === 'granted') {
             navigator.serviceWorker.ready.then(registration => {
                 registration.showNotification('Movie Rater', {
                     body: 'Successful registration! You can login now.',

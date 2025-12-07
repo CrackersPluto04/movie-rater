@@ -84,6 +84,7 @@ function App() {
 }
 
 // Push notification implementation
-Notification.requestPermission();
+if ('Notification' in window)
+	Notification.requestPermission();
 
 render(<App />, document.getElementById('app'));
