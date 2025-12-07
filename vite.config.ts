@@ -5,4 +5,9 @@ import preact from '@preact/preset-vite';
 export default defineConfig({
 	plugins: [preact()],
 	base: "",
+
+	build: {
+		target: 'es2015',
+		outDir: 'dist'
+	}
 });
